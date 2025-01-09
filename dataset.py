@@ -11,6 +11,7 @@ import time
 from datetime import datetime, timedelta
 import csv
 
+# set up chrome driver
 chrome_options = Options()
 chrome_options.add_argument("--headless") 
 service = Service()
@@ -19,6 +20,7 @@ base_url = "https://entertain.naver.com/ranking"
 driver.get(base_url)
 
 def extract(soup):
+    # identify daily top five articles and get their title and links from html
     ranking = soup.find('ul', {'id': 'ranking_list'})
     articles = ranking.find_all('li')[:5]
     results = []
@@ -40,6 +42,7 @@ def extract(soup):
 
 
 with open('top_articles.csv', mode='w', newline='', encoding='utf-8') as file:
+    # put results into csv
     writer = csv.writer(file)
     writer.writerow(['Day', 'Rank', 'Title', 'URL'])
 
@@ -48,8 +51,10 @@ with open('top_articles.csv', mode='w', newline='', encoding='utf-8') as file:
     for rank, title, url in today_results:
         writer.writerow(['Today', rank, title, url])
 
+    # repeat for the past five years
     for day in range(1, 3650):
         try:
+            # put date into proper format then enter link for that date
             prev_date = datetime.now() - timedelta(days=day)
             date = prev_date.strftime('%Y-%m-%d')
 
