@@ -13,7 +13,8 @@ def sentiment(text, dictionary):
     # neutral if not in dictionary
     if not tokens:  
         return 0.0
-    
+
+    # sum scores of tokens in the sentence
     score = 0
     for entry in dictionary:
         if entry['word'] in tokens or entry['word_root'] in tokens:
@@ -25,7 +26,8 @@ def sentiment(text, dictionary):
 
 if __name__ == "__main__":
     file = 'articles_drugs_m.txt'
-    
+
+    # read line by line
     with open(file, 'r', encoding='utf-8') as f:
         lines = f.read().splitlines()
 
