@@ -11,11 +11,13 @@ import time
 from datetime import datetime, timedelta
 import csv
 
+# set up chrome driver
 chrome_options = Options()
 chrome_options.add_argument("--headless")
 service = Service()
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
+# get urls to parse through
 with open("character_f.csv", mode="r", encoding="utf-8") as file:
     csv_reader = csv.reader(file)
     urls = []
@@ -24,6 +26,7 @@ with open("character_f.csv", mode="r", encoding="utf-8") as file:
         url = row[1]
         urls.append(url)
 
+# scrape article content
 def scrape_text(url):
     options = webdriver.ChromeOptions()
     options.add_argument("--headless")
@@ -32,14 +35,15 @@ def scrape_text(url):
     try:
         driver.get(url)
         time.sleep(3)
-        content_div = driver.find_element(By.CLASS_NAME, "_article_content")
-        return content_div.text
+        content = driver.find_element(By.CLASS_NAME, "_article_content")
+        return content.text
     except Exception as e:
         print(f"error scraping {url}: {e}")
         return None
     finally:
         driver.quit()
 
+# put results in a txt file
 with open("character_drugs_f.txt", "w", newline="", encoding="utf-8") as txtfile:
     csv_writer = csv.writer(txtfile)
     csv_writer.writerow(["Content"])
