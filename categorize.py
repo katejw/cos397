@@ -1,10 +1,12 @@
 import csv
 
+# keywords to look for
 keywords = [" 인성", "갑질", "민폐", "욕"]
 
 filtered = []
-output_file = "character.csv"
+output = "character.csv"
 
+# put title in csv if it contains keyword
 with open("top_articles.csv", mode="r", encoding="utf-8") as file:
     reader = csv.reader(file)
     next(reader)
@@ -15,6 +17,6 @@ with open("top_articles.csv", mode="r", encoding="utf-8") as file:
             if word.lower() in title.lower():
                 filtered.append((title, url))
 
-with open(output_file, mode="w", encoding="utf-8", newline="") as file:
-    csv_writer = csv.writer(file)
-    csv_writer.writerows(filtered)
+with open(output, mode="w", encoding="utf-8", newline="") as file:
+    writer = csv.writer(file)
+    writer.writerows(filtered)
