@@ -3,9 +3,9 @@ from konlpy.tag import Okt
 from nltk import ngrams
 from collections import Counter
 
-def ngram(file_path, n=2, top_n=20):
+def ngram(file, n=2, top_n=20):
     # load file
-    with open(file_path, 'r', encoding='utf-8') as file:
+    with open(file, 'r', encoding='utf-8') as file:
         text = file.read()
     
     # remove punctuation
@@ -18,6 +18,7 @@ def ngram(file_path, n=2, top_n=20):
     counts = Counter(n_grams)
     most_common_ngrams = counts.most_common(top_n)
 
+    # print results
     for ngram, count in most_common_ngrams:
         print(f"{' '.join(ngram)}: {count}")
 
