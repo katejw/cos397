@@ -19,10 +19,10 @@ driver = webdriver.Chrome(service=service, options=chrome_options)
 
 # get urls to parse through
 with open("character_f.csv", mode="r", encoding="utf-8") as file:
-    csv_reader = csv.reader(file)
+    reader = csv.reader(file)
     urls = []
-    next(csv_reader)
-    for row in csv_reader:
+    next(reader)
+    for row in reader:
         url = row[1]
         urls.append(url)
 
@@ -45,9 +45,9 @@ def scrape_text(url):
 
 # put results in a txt file
 with open("character_drugs_f.txt", "w", newline="", encoding="utf-8") as txtfile:
-    csv_writer = csv.writer(txtfile)
-    csv_writer.writerow(["Content"])
+    writer = csv.writer(txtfile)
+    writer.writerow(["Content"])
     for url in urls:
-        article_text = scrape_text(url)
-        if article_text:
-            csv_writer.writerow([article_text])
+        text = scrape_text(url)
+        if text:
+            writer.writerow([text])
